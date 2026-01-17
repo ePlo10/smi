@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STICKY MONEY ai - Multi-Timeframe Analysis System</title>
+    <meta name="description" content="Professional-grade technical analysis overlay. Eight integrated systems for confluence detection across forex, equities, and digital assets.">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --border-light: #d2d2d7;
+            --accent: #0066cc;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Display', 'Segoe UI', sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            line-height: 1.47059;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
+        }
+        
+        nav {
+            max-width: 980px; margin: 0 auto; padding: 0 22px; height: 44px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        
+        .logo img { height: 36px; width: auto; }
+        
+        .nav-link {
+            text-decoration: none; font-size: 14px; font-weight: 400; padding: 8px 18px;
+            border-radius: 980px; background: var(--text-primary); color: var(--bg-primary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-link:hover { background: var(--text-secondary); transform: scale(1.02); }
+        
+        /* Hero Section with Video Background */
+        .hero {
+            position: relative; margin-top: 44px; padding: 140px 22px;
+            text-align: center; overflow: hidden; background: #000; color: #fff;
+        }
+
+        .hero-video-bg {
+            position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
+            width: auto; height: auto; transform: translate(-50%, -50%);
+            z-index: 0; opacity: 0.45; object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+            z-index: 1;
+        }
+
+        .hero-content { position: relative; z-index: 2; max-width: 980px; margin: 0 auto; }
+        
+        .hero-logo { width: 120px; height: 120px; margin: 0 auto 30px; filter: drop-shadow(0 0 20px rgba(0,0,0,0.5)); }
+        .hero-logo img { width: 100%; height: 100%; object-fit: contain; }
+        .hero h1 { font-size: 56px; font-weight: 700; line-height: 1.07143; letter-spacing: -0.005em; margin-bottom: 16px; }
+        .hero-subtitle { font-size: 28px; font-weight: 600; color: #d2d2d7; margin-bottom: 24px; }
+        .hero-description { font-size: 21px; color: #a1a1a6; max-width: 740px; margin: 0 auto 40px; }
+        
+        .cta-button {
+            display: inline-block; background: var(--accent); color: #ffffff;
+            padding: 12px 32px; border-radius: 980px; text-decoration: none;
+            font-size: 17px; font-weight: 500; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .cta-button:hover { background: #0077ed; transform: scale(1.02); }
+        
+        /* Gallery with Looping Videos */
+        .gallery { background: var(--bg-secondary); padding: 80px 0; max-width: 100%; }
+        .gallery-inner { max-width: 980px; margin: 0 auto; padding: 0 22px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 32px; margin-top: 60px; }
+        
+        .gallery-item { background: var(--bg-primary); border-radius: 18px; overflow: hidden; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .gallery-item:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12); }
+        
+        .gallery-video-container { width: 100%; aspect-ratio: 16 / 9; background: #000; overflow: hidden; }
+        .gallery-video-container video { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-caption { padding: 20px 24px; font-size: 14px; color: var(--text-secondary); font-weight: 400; }
+
+        /* Method Section with High-Res Screenshots */
+        .methodology { padding: 100px 22px; max-width: 1100px; margin: 0 auto; }
+        .method-grid { display: grid; grid-template-columns: 1fr; gap: 80px; margin-top: 60px; }
+        .method-item { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; }
+        .method-item:nth-child(even) { direction: rtl; }
+        .method-item:nth-child(even) .method-text { direction: ltr; }
+        
+        .screenshot-container { border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 1px solid var(--border-light); }
+        .screenshot-container img { width: 100%; height: auto; display: block; }
+        .method-title { font-size: 32px; font-weight: 700; margin-bottom: 16px; color: var(--text-primary); }
+        .method-text { font-size: 18px; color: var(--text-secondary); line-height: 1.6; }
+
+        /* Capabilities */
+        .capabilities { background: var(--bg-primary); padding: 80px 22px; max-width: 980px; margin: 0 auto; }
+        .capabilities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 48px; margin-top: 60px; }
+        .capability { padding-bottom: 24px; border-bottom: 1px solid var(--border-light); }
+        .capability-title { font-size: 21px; font-weight: 600; margin-bottom: 12px; }
+        .capability-description { font-size: 17px; color: var(--text-secondary); }
+        
+        /* Technical Specs */
+        .technical-specs { background: var(--bg-secondary); padding: 80px 22px; max-width: 100%; }
+        .specs-inner { max-width: 980px; margin: 0 auto; }
+        .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; margin-top: 60px; }
+        .spec-item { background: var(--bg-primary); padding: 24px; border-radius: 18px; }
+        .spec-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; }
+        
+        /* Access Section */
+        .access-section { background: var(--text-primary); color: var(--bg-primary); padding: 120px 22px; text-align: center; max-width: 100%; }
+        .access-content { max-width: 740px; margin: 0 auto; }
+        .access-section h2 { font-size: 48px; font-weight: 700; margin-bottom: 16px; }
+        .access-btn { display: inline-block; background: var(--bg-primary); color: var(--text-primary); padding: 12px 32px; border-radius: 980px; text-decoration: none; font-weight: 500; }
+        
+        /* Footer */
+        footer { background: var(--bg-secondary); border-top: 1px solid var(--border-light); padding: 40px 22px 32px; }
+        .footer-content { max-width: 980px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 32px; }
+        .footer-links { display: flex; gap: 32px; }
+        .footer-link { color: var(--text-secondary); text-decoration: none; font-size: 14px; }
+        .footer-legal { width: 100%; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border-light); font-size: 12px; color: var(--text-secondary); text-align: center; }
+        
+        /* Responsive */
+        @media (max-width: 850px) {
+            .method-item { grid-template-columns: 1fr; direction: ltr !important; }
+            .hero h1 { font-size: 32px; }
+            .gallery-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo"><img src="logo.png" alt="STICKY MONEY ai"></a>
+            <a href="https://whop.com/sticky-money-ai/analysis-system" class="nav-link">Start Evaluation</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <video class="hero-video-bg" autoplay muted loop playsinline poster="spx.jpg">
+            <source src="spx.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-logo"><img src="logo.png" alt="STICKY MONEY ai"></div>
+            <h1>STICKY MONEY ai</h1>
+            <p class="hero-subtitle">Multi-Timeframe Analysis System</p>
+            <p class="hero-description">Professional-grade technical analysis overlay providing real-time confluence detection across eight integrated systems.</p>
+            <a href="https://whop.com/sticky-money-ai/analysis-system" class="cta-button">Start 7-Day Evaluation</a>
+        </div>
+    </section>
+
+    <section class="gallery">
+        <div class="gallery-inner">
+            <p class="section-eyebrow">SYSTEM OUTPUT</p>
+            <h2 class="section-title">See it in action</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="gallery-video-container">
+                        <video autoplay muted loop playsinline><source src="nvda.mp4" type="video/mp4"></video>
+                    </div>
+                    <div class="gallery-caption">NVDA — Session confluence with multi-timeframe bias alignment</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-video-container">
+                        <video autoplay muted loop playsinline><source src="btcusd.mp4" type="video/mp4"></video>
+                    </div>
+                    <div class="gallery-caption">BTC/USD — Fibonacci confluence with volume distribution</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-video-container">
+                        <video autoplay muted loop playsinline><source src="eurusd.mp4" type="video/mp4"></video>
+                    </div>
+                    <div class="gallery-caption">EUR/USD — Real-time session tracking with structural levels</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-video-container">
+                        <video autoplay muted loop playsinline><source src="spx.mp4" type="video/mp4"></video>
+                    </div>
+                    <div class="gallery-caption">SPX — Multi-day structure with step progression</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="methodology">
+        <p class="section-eyebrow">PRECISION ANALYSIS</p>
+        <h2 class="section-title">Deep-Dive Technical Framework</h2>
+        
+        <div class="method-grid">
+            <div class="method-item">
+                <div class="screenshot-container"><img src="spx2.jpg" alt="SPX High Resolution Analysis"></div>
+                <div class="method-text">
+                    <h3 class="method-title">Structural Confluence</h3>
+                    <p>Identify high-probability areas where session boxes, structural steps, and automated trendlines intersect. These clusters represent institutional entry and exit points.</p>
+                </div>
+            </div>
+
+            <div class="method-item">
+                <div class="screenshot-container"><img src="nvda2.jpg" alt="NVDA High Resolution Analysis"></div>
+                <div class="method-text">
+                    <h3 class="method-title">Session Volatility</h3>
+                    <p>Observe the HOT TIME windows where historical volatility is highest. The system highlights 30-minute intervals of maximum range expansion based on 100-session historical data.</p>
+                </div>
+            </div>
+
+            <div class="method-item">
+                <div class="screenshot-container"><img src="eur.jpg" alt="EURUSD High Resolution Analysis"></div>
+                <div class="method-text">
+                    <h3 class="method-title">Volume Distribution</h3>
+                    <p>Map high-volume nodes and low-volume gaps. High-volume areas indicate price acceptance, while gaps often exhibit rapid price movement when revisited.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="capabilities">
+        <p class="section-eyebrow">ARCHITECTURE</p>
+        <h2 class="section-title">Eight integrated systems</h2>
+        <div class="capabilities-grid">
+            <div class="capability">
+                <h3 class="capability-title">Session Analytics</h3>
+                <p class="capability-description">Tracks London, New York, and Asian sessions with quantified volatility windows.</p>
+            </div>
+            <div class="capability">
+                <h3 class="capability-title">Multi-TF Moving Averages</h3>
+                <p class="capability-description">Seven timeframes with color-coded directional bias. The 4H EMA 50 functions as a gravitational center.</p>
+            </div>
+            <div class="capability">
+                <h3 class="capability-title">Bias Monitor</h3>
+                <p class="capability-description">Displays directional alignment across five timeframes simultaneously.</p>
+            </div>
+            <div class="capability">
+                <h3 class="capability-title">Fibonacci Retracements</h3>
+                <p class="capability-description">Eight concurrent calculations: 90-minute, NY session, daily, weekly, monthly.</p>
+            </div>
+            <div class="capability">
+                <h3 class="capability-title">Volume Profile</h3>
+                <p class="capability-description">Visible-range distribution displaying horizontal concentration zones.</p>
+            </div>
+            <div class="capability">
+                <h3 class="capability-title">Structural Levels</h3>
+                <p class="capability-description">Previous week extremes and Asian session boundaries.</p>
+            </div>
+            <div class="capability">
+                <h3 class="capability-title">Automated Trendlines</h3>
+                <p class="capability-description">Algorithm-generated lines from pivot analysis filtered by strength.</p>
+            </div>
+            <div class="capability">
+                <h3 class="capability-title">Fractal Identification</h3>
+                <p class="capability-description">Swing high/low identification with automatic removal for clarity.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="technical-specs">
+        <div class="specs-inner">
+            <p class="section-eyebrow">SPECIFICATIONS</p>
+            <h2 class="section-title">Technical infrastructure</h2>
+            <div class="specs-grid">
+                <div class="spec-item"><div class="spec-label">Platform</div><div class="spec-value">TradingView (Pine Script v6)</div></div>
+                <div class="spec-item"><div class="spec-label">Asset Classes</div><div class="spec-value">Forex, Equities, Indices, Crypto, Commodities</div></div>
+                <div class="spec-item"><div class="spec-label">Timezone</div><div class="spec-value">America/Chicago (Central)</div></div>
+                <div class="spec-item"><div class="spec-label">Version</div><div class="spec-value">69.23 (January 2026)</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="access-section">
+        <div class="access-content">
+            <h2>7-Day Evaluation</h2>
+            <p>Test the complete analysis system on your trading book.</p>
+            <a href="https://whop.com/sticky-money-ai/analysis-system" class="access-btn">Start Evaluation</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo"><img src="logo.png" alt="STICKY MONEY ai"></div>
+            <div class="footer-links">
+                <a href="STICKY_MONEY_Guide_v69.23.pdf" download class="footer-link">Documentation</a>
+                <a href="https://whop.com/sticky-money-ai/analysis-system" class="footer-link">Evaluation</a>
+            </div>
+        </div>
+        <div class="footer-legal">© 2026 STICKY MONEY. Not investment advice.</div>
+    </footer>
+</body>
+</html>
