@@ -28,6 +28,7 @@
             font-size: 17px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden; /* Prevents horizontal drift */
         }
         
         /* Header */
@@ -93,7 +94,7 @@
         .gallery-inner { max-width: 980px; margin: 0 auto; padding: 0 22px; }
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 32px; margin-top: 60px; }
         
-        .gallery-item { background: var(--bg-primary); border-radius: 18px; overflow: hidden; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .gallery-item { background: var(--bg-primary); border-radius: 18px; overflow: hidden; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: zoom-in; }
         .gallery-item:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12); }
         
         .gallery-video-container { width: 100%; aspect-ratio: 16 / 9; background: #000; overflow: hidden; }
@@ -107,7 +108,7 @@
         .method-item:nth-child(even) { direction: rtl; }
         .method-item:nth-child(even) .method-text { direction: ltr; }
         
-        .screenshot-container { border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 1px solid var(--border-light); }
+        .screenshot-container { border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 1px solid var(--border-light); cursor: zoom-in; }
         .screenshot-container img { width: 100%; height: auto; display: block; }
         .method-title { font-size: 32px; font-weight: 700; margin-bottom: 16px; color: var(--text-primary); }
         .method-text { font-size: 18px; color: var(--text-secondary); line-height: 1.6; }
@@ -132,18 +133,30 @@
         .access-section h2 { font-size: 48px; font-weight: 700; margin-bottom: 16px; }
         .access-btn { display: inline-block; background: var(--bg-primary); color: var(--text-primary); padding: 12px 32px; border-radius: 980px; text-decoration: none; font-weight: 500; }
         
-        /* Footer */
+        /* Lightbox CSS */
+        .lightbox {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center;
+        }
+        .lightbox:target { display: flex; }
+        .lightbox img, .lightbox video { max-width: 90%; max-height: 80vh; border-radius: 8px; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
+        .close-lightbox { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 50px; text-decoration: none; font-weight: 200; }
+
+        /* Footer & Mobile Logo Scaling */
         footer { background: var(--bg-secondary); border-top: 1px solid var(--border-light); padding: 40px 22px 32px; }
         .footer-content { max-width: 980px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 32px; }
+        .footer-logo { margin-bottom: 8px; }
+        .footer-logo img { max-width: 240px; width: 100%; height: auto; display: block; }
         .footer-links { display: flex; gap: 32px; }
         .footer-link { color: var(--text-secondary); text-decoration: none; font-size: 14px; }
         .footer-legal { width: 100%; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border-light); font-size: 12px; color: var(--text-secondary); text-align: center; }
         
-        /* Responsive */
+        /* Responsive Overrides */
         @media (max-width: 850px) {
             .method-item { grid-template-columns: 1fr; direction: ltr !important; }
             .hero h1 { font-size: 32px; }
             .gallery-grid { grid-template-columns: 1fr; }
+            .footer-logo img { max-width: 180px; }
         }
     </style>
 </head>
@@ -174,30 +187,36 @@
             <p class="section-eyebrow">SYSTEM OUTPUT</p>
             <h2 class="section-title">See it in action</h2>
             <div class="gallery-grid">
-                <div class="gallery-item">
+                <a href="#v-nvda" class="gallery-item">
                     <div class="gallery-video-container">
                         <video autoplay muted loop playsinline><source src="nvda.mp4" type="video/mp4"></video>
                     </div>
                     <div class="gallery-caption">NVDA — Session confluence with multi-timeframe bias alignment</div>
-                </div>
-                <div class="gallery-item">
-                    <div class="gallery-video-container">
-                        <video autoplay muted loop playsinline><source src="btcusd.mp4" type="video/mp4"></video>
+                </a>
+                <a href="#v-btc" class="gallery-item">
+                    <div class="gallery-item">
+                        <div class="gallery-video-container">
+                            <video autoplay muted loop playsinline><source src="btcusd.mp4" type="video/mp4"></video>
+                        </div>
+                        <div class="gallery-caption">BTC/USD — Fibonacci confluence with volume distribution</div>
                     </div>
-                    <div class="gallery-caption">BTC/USD — Fibonacci confluence with volume distribution</div>
-                </div>
-                <div class="gallery-item">
-                    <div class="gallery-video-container">
-                        <video autoplay muted loop playsinline><source src="eurusd.mp4" type="video/mp4"></video>
+                </a>
+                <a href="#v-eur" class="gallery-item">
+                    <div class="gallery-item">
+                        <div class="gallery-video-container">
+                            <video autoplay muted loop playsinline><source src="eurusd.mp4" type="video/mp4"></video>
+                        </div>
+                        <div class="gallery-caption">EUR/USD — Real-time session tracking with structural levels</div>
                     </div>
-                    <div class="gallery-caption">EUR/USD — Real-time session tracking with structural levels</div>
-                </div>
-                <div class="gallery-item">
-                    <div class="gallery-video-container">
-                        <video autoplay muted loop playsinline><source src="spx.mp4" type="video/mp4"></video>
+                </a>
+                <a href="#v-spx" class="gallery-item">
+                    <div class="gallery-item">
+                        <div class="gallery-video-container">
+                            <video autoplay muted loop playsinline><source src="spx.mp4" type="video/mp4"></video>
+                        </div>
+                        <div class="gallery-caption">SPX — Multi-day structure with step progression</div>
                     </div>
-                    <div class="gallery-caption">SPX — Multi-day structure with step progression</div>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -208,7 +227,7 @@
         
         <div class="method-grid">
             <div class="method-item">
-                <div class="screenshot-container"><img src="spx2.jpg" alt="SPX High Resolution Analysis"></div>
+                <a href="#img-spx2" class="screenshot-container"><img src="spx2.jpg" alt="SPX High Resolution Analysis"></a>
                 <div class="method-text">
                     <h3 class="method-title">Structural Confluence</h3>
                     <p>Identify high-probability areas where session boxes, structural steps, and automated trendlines intersect. These clusters represent institutional entry and exit points.</p>
@@ -216,7 +235,7 @@
             </div>
 
             <div class="method-item">
-                <div class="screenshot-container"><img src="nvda2.jpg" alt="NVDA High Resolution Analysis"></div>
+                <a href="#img-nvda2" class="screenshot-container"><img src="nvda2.jpg" alt="NVDA High Resolution Analysis"></a>
                 <div class="method-text">
                     <h3 class="method-title">Session Volatility</h3>
                     <p>Observe the HOT TIME windows where historical volatility is highest. The system highlights 30-minute intervals of maximum range expansion based on 100-session historical data.</p>
@@ -224,7 +243,7 @@
             </div>
 
             <div class="method-item">
-                <div class="screenshot-container"><img src="eur.jpg" alt="EURUSD High Resolution Analysis"></div>
+                <a href="#img-eur" class="screenshot-container"><img src="eur.jpg" alt="EURUSD High Resolution Analysis"></a>
                 <div class="method-text">
                     <h3 class="method-title">Volume Distribution</h3>
                     <p>Map high-volume nodes and low-volume gaps. High-volume areas indicate price acceptance, while gaps often exhibit rapid price movement when revisited.</p>
@@ -292,6 +311,14 @@
             <a href="https://whop.com/sticky-money-ai/analysis-system" class="access-btn">Start Evaluation</a>
         </div>
     </section>
+
+    <div id="v-nvda" class="lightbox"><a href="#" class="close-lightbox">&times;</a><video controls autoplay loop><source src="nvda.mp4" type="video/mp4"></video></div>
+    <div id="v-btc" class="lightbox"><a href="#" class="close-lightbox">&times;</a><video controls autoplay loop><source src="btcusd.mp4" type="video/mp4"></video></div>
+    <div id="v-eur" class="lightbox"><a href="#" class="close-lightbox">&times;</a><video controls autoplay loop><source src="eurusd.mp4" type="video/mp4"></video></div>
+    <div id="v-spx" class="lightbox"><a href="#" class="close-lightbox">&times;</a><video controls autoplay loop><source src="spx.mp4" type="video/mp4"></video></div>
+    <div id="img-spx2" class="lightbox"><a href="#" class="close-lightbox">&times;</a><img src="spx2.jpg" alt="SPX Analysis"></div>
+    <div id="img-nvda2" class="lightbox"><a href="#" class="close-lightbox">&times;</a><img src="nvda2.jpg" alt="NVDA Analysis"></div>
+    <div id="img-eur" class="lightbox"><a href="#" class="close-lightbox">&times;</a><img src="eur.jpg" alt="EUR Analysis"></div>
 
     <footer>
         <div class="footer-content">
